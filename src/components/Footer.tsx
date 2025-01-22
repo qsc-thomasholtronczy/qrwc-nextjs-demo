@@ -1,8 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { BsVolumeUp, BsVolumeMute } from 'react-icons/bs'
-import { FaPlus, FaMinus } from 'react-icons/fa'
+import { LuVolumeX, LuVolume2, LuPlus, LuMinus} from "react-icons/lu"
 import { useToggle } from '@/hooks/useToggle'
 import { useVolume } from '@/hooks/useVolume'
 
@@ -24,6 +23,8 @@ const Footer = () => {
     return <div>Loading volume controls...</div>
   }
 
+  const safeVolume = volume !== null ? volume : 0; // Default to 0 if volume is null
+
   return (
     <footer className="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 font-[family-name:var(--font-geist-sans)]">
       <div className="flex items-center gap-4 max-w-screen-xl mx-auto">
@@ -31,7 +32,7 @@ const Footer = () => {
           onClick={() => adjustVolume(-5)}
           className="p-2 hover:bg-gray-700 rounded-full"
         >
-          <FaMinus size={16} />
+          <LuMinus size={16} />
         </button>
 
         <div className="flex-1 flex items-center gap-2">
@@ -39,7 +40,7 @@ const Footer = () => {
             onClick={toggleMute}
             className="p-2 hover:bg-gray-700 rounded-full"
           >
-            {isMuted ? <BsVolumeMute size={20} /> : <BsVolumeUp size={20} />}
+            {isMuted ? <LuVolumeX size={20} /> : <LuVolume2 size={20} />}
           </button>
           
           <div 
@@ -49,7 +50,7 @@ const Footer = () => {
             <div
               className="h-full transition-all duration-300"
               style={{ 
-                width: `${dbToPercent(volume)}%`,
+                width: `${dbToPercent(safeVolume)}%`,
                 backgroundColor: isMuted ? '#ef4444' : '#22c55e'
               }}
             />
@@ -61,7 +62,7 @@ const Footer = () => {
           onClick={() => adjustVolume(5)}
           className="p-2 hover:bg-gray-700 rounded-full"
         >
-          <FaPlus size={16} />
+          <LuPlus size={16} />
         </button>
       </div>
     </footer>

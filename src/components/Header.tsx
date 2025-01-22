@@ -2,9 +2,7 @@
 
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { BsMicMute, BsMic } from 'react-icons/bs'
-import { FaVideo, FaVideoSlash, FaLightbulb, FaRegLightbulb} from 'react-icons/fa'
-import { HiPower as Power } from 'react-icons/hi2'
+import { LuMic, LuMicOff, LuVideo, LuVideoOff, LuLightbulb, LuLightbulbOff, LuPower   } from 'react-icons/lu'
 import Image from 'next/image'
 import { useToggle } from '@/hooks/useToggle'
 
@@ -45,28 +43,28 @@ const Header = () => {
             onClick={toggleMic}
             className={`p-2 rounded-full ${isMicMuted ? 'bg-red-600' : 'bg-green-500'}`}
           >
-            {isMicMuted ? <BsMicMute size={20} /> : <BsMic size={20} />}
+            {isMicMuted ? <LuMicOff size={20} /> : <LuMic size={20} />}
           </button>
 
           <button 
             onClick={togglePrivacy}
             className={`p-2 rounded-full ${isCameraPrivate ? 'bg-blue-500' : 'bg-gray-700'}`}
           >
-            {isCameraPrivate ? <FaVideoSlash size={20} /> : <FaVideo size={20} />}
+            {isCameraPrivate ? <LuVideoOff size={20} /> : <LuVideo size={20} />}
           </button>
 
           <button 
             onClick={toggleLight}
             className={`p-2 rounded-full ${isLightOn ? 'bg-yellow-500' : 'bg-gray-700'}`}
           >
-            {isLightOn ? <FaLightbulb size={20} /> : <FaRegLightbulb size={20} />}
+            {isLightOn ? <LuLightbulbOff size={20} /> : <LuLightbulb size={20} />}
           </button>
 
           <button
             onClick={setIsPowerOn}
             className={`p-2 rounded-full ${ isPowerOn  ? 'bg-green-500' : 'bg-red-600'}`}
           >
-            <Power size={20} />
+            <LuPower size={20} />
           </button>
 
           <div className="w-px h-6 bg-gray-700 mx-4" />

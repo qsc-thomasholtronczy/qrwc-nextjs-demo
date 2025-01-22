@@ -1,7 +1,6 @@
 "use client"
 
-import { BsVolumeMute, BsVolumeUp } from "react-icons/bs"
-import { FaPlus, FaMinus } from "react-icons/fa"
+import { LuVolumeX, LuVolume2, LuPlus, LuMinus} from "react-icons/lu"
 import { useVolume } from "@/hooks/useVolume"
 import { useToggle } from "@/hooks/useToggle"
 
@@ -62,19 +61,19 @@ function VolumeControl({ name, componentName }: { name: string, componentName: s
             onClick={() => adjustVolume(5)}
             className="p-2 hover:bg-gray-700 rounded-full text-white"
           >
-            <FaPlus size={16} />
+            <LuPlus size={16} />
           </button>
           <button
             onClick={toggleMute}
             className="p-2 hover:bg-gray-700 rounded-full text-white"
           >
-            {isMuted ? <BsVolumeMute size={20} /> : <BsVolumeUp size={20} />}
+            {isMuted ? <LuVolumeX size={20} /> : <LuVolume2 size={20} />}
           </button>
           <button
             onClick={() => adjustVolume(-5)}
             className="p-2 hover:bg-gray-700 rounded-full text-white"
           >
-            <FaMinus size={16} />
+            <LuMinus size={16} />
           </button>
         </div>
       </div>
