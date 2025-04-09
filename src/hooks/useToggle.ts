@@ -15,20 +15,20 @@ export const useToggle = ({ componentName, controlName }: UseToggleProps) => {
   useEffect(() => {
     if (!components?.[componentName]) return
 
-    setState(components[componentName][controlName].Value)
+    setState(components[componentName].Controls[controlName].Value)
 
     const interval = setInterval(() => {
-      setState(components[componentName][controlName].Value)
+      setState(components[componentName].Controls[controlName].Value)
     }, 100)
 
     return () => clearInterval(interval)
   }, [components, componentName, controlName])
 
   const toggle = () => {
-    if (!components?.[componentName]?.[controlName] || state === null) return
+    if (!components?.[componentName]?.Controls[controlName] || state === null) return
     
     const newState = !state
-    components[componentName][controlName].String = newState.toString()
+    components[componentName].Controls[controlName].String = newState.toString()
     setState(newState)
   }
 

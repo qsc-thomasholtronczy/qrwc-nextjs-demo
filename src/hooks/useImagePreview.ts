@@ -12,13 +12,13 @@ export const useImagePreview = ({ componentName, controlName }: UseImagePreviewP
   const { components } = useQsys();
   const [imageData, setImageData] = useState<string>("");
   useEffect(() => {
-    if (!components?.[componentName]?.[controlName]) {
+    if (!components?.[componentName]?.Controls[controlName]) {
       console.error(`Component or control not found: ${componentName}.${controlName}`);
       return;
     }
 
     const fetchImageData = () => {
-      const control = components[componentName][controlName];
+      const control = components[componentName].Controls[controlName];
       try {
         const parsedValue = JSON.parse(control.String);
         setImageData(parsedValue.IconData);

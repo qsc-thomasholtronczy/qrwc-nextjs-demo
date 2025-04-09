@@ -15,19 +15,18 @@ export const useTrigger = ({ componentName, controlName }: useTriggerProps) => {
     useEffect(() => {
         if (!components?.[componentName]) return
 
-        setState(components[componentName][controlName].Value)
+        setState(components[componentName].Controls[controlName].Value)
 
         const interval = setInterval(() => {
-            setState(components[componentName][controlName].Value)
+            setState(components[componentName].Controls[controlName].Value)
         }, 100)
 
         return () => clearInterval(interval)
     }, [components, componentName, controlName])
 
     const trigger = () => {
-        if (!components?.[componentName]?.[controlName] || state === null) return
-
-        components[componentName][controlName].Value = '1'
+        if (!components?.[componentName]?.Controls[controlName] || state === null) return
+        components[componentName].Controls[controlName].Value = '1'
     }
 
     return { state, trigger }
