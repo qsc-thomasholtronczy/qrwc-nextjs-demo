@@ -27,6 +27,9 @@ npm i @q-sys/qrwc
 # or
 pnpm add @q-sys/qrwc
 
+# Ensure Node.JS Version 18
+nvm use 18
+
 # Start development server
 npm run dev
 # or
