@@ -24,20 +24,20 @@ export const useVolume = ({
     useEffect(() => {
         if (!components?.[componentName]) return
 
-        setVolume(components[componentName][controlName].Value)
+        setVolume(components[componentName].Controls[controlName].Value)
 
         const interval = setInterval(() => {
-            setVolume(components[componentName][controlName].Value)
+            setVolume(components[componentName].Controls[controlName].Value)
         }, 100)
 
         return () => clearInterval(interval)
     }, [components, componentName, controlName])
 
     const adjustVolume = (amount: number) => {
-        if (!components?.[componentName]?.[controlName] || volume === null) return
+        if (!components?.[componentName]?.Controls[controlName] || volume === null) return
 
         const newVolume = Math.min(Math.max(volume + amount, min), max)
-        components[componentName][controlName].String = newVolume.toString()
+        components[componentName].Controls[controlName].String = newVolume.toString()
         setVolume(newVolume)
     }
 
