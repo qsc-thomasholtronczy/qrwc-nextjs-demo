@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+Dockerfile
+qsys-sidebar-ui.qsys
+qsys-sidebar-ui.code-workspace

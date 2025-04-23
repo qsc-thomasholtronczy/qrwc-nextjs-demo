@@ -1,48 +1,36 @@
 "use client";
 
 import { Qrwc } from "@q-sys/qrwc";
+import { IComponent } from "@q-sys/qrwc/dist/index.interface";
 
-export class QsysConnection {
-  private qrwc: Qrwc;
-  private socket: WebSocket | null = null;
-  private reconnectTimer: NodeJS.Timeout | null = null;
-  private ip: string = '';
+export const setupQrwc = (onControlsUpdated: (qrwc: Qrwc, updatedComponent: IComponent) => void, startComplete: (qrwc: Qrwc) => void, disconnect: (qrwc: Qrwc) => void) => {
+  let socket: WebSocket | null = null
+  
+  const connectQrwc = async () => {
+    socket = new WebSocket(`ws://${process.env.NEXT_PUBLIC_QSYS_IP}/qrc-public-api/v0`)
 
-  constructor() {
-    this.qrwc = new Qrwc();
-  }
+    const qrwc = new Qrwc()
 
-  connect(ip: string) {
-    this.ip = ip;
-    this.socket = new WebSocket(`ws://${ip}/qrc-public-api/v0`);
-
-    this.socket.onopen = () => {
-      this.qrwc.attachWebSocket(this.socket!);
-    };
-
-    this.socket.onclose = () => {
-      this.attemptReconnect();
-    };
-
-    return this.qrwc;
-  }
-
-  private attemptReconnect() {
-    if (this.reconnectTimer) return;
-    
-    this.reconnectTimer = setInterval(() => {
-      if (this.ip) this.connect(this.ip);
-    }, 5000);
-  }
-
-  disconnect() {
-    if (this.reconnectTimer) {
-      clearInterval(this.reconnectTimer);
-      this.reconnectTimer = null;
+    socket.onopen = async () => {
+      await qrwc.attachWebSocket(socket!)
+      await qrwc.start({
+        // componentFilter,
+        // pollingInterval
+      })
+      qrwc.on('controlsUpdated', (updatedComponent) =>
+        onControlsUpdated(qrwc, updatedComponent as unknown as IComponent)
+      )
+  
+      qrwc.on('disconnect', () => disconnect(qrwc))
+  
+      qrwc.on('startComplete', () => startComplete(qrwc))
     }
-    if (this.socket) {
-      this.socket.close();
-      this.socket = null;
+
+    socket.onerror = (error) => {
+      setTimeout(connectQrwc, 1000) // Retry connection after 1 second
     }
   }
+
+  connectQrwc()
+  
 }

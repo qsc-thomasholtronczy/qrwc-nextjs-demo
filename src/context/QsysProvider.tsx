@@ -1,14 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useRef, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { Qrwc } from '@q-sys/qrwc';
+import { setupQrwc } from '@/utils/qsysConnection';
 
 type QsysContextType = {
   components: any;
   isConnected: boolean;
-  connect: (ip: string) => void;
-  disconnect: () => void;
-  reconnect: () => void;
 };
 
 const QsysContext = createContext<QsysContextType | undefined>(undefined);
@@ -20,75 +18,25 @@ function QsysProvider({ children }: { children: React.ReactNode }) {
   const socketRef = useRef<WebSocket | null>(null);
   const ipRef = useRef<string>('');
 
-  const initializeQrwc = useCallback(() => {
-    if (!qrwcRef.current) {
-      qrwcRef.current = new Qrwc();
-      
-      qrwcRef.current.on("webSocketAttached", () => {
-        qrwcRef.current?.start();
-      });
-
-      qrwcRef.current.on("startComplete", () => {
-        setComponents(qrwcRef.current?.components);
+  useEffect(() => {
+    setupQrwc(
+      (Qrwc: Qrwc, updatedComponent: any) => {
+        setComponents(Qrwc.components);
+      }
+    , (Qrwc: Qrwc) => {
+        setComponents(Qrwc.components);
         setIsConnected(true);
-      });
-
-      qrwcRef.current.on("controlsUpdated", () => {
-        setComponents(qrwcRef.current?.components);
-      });
-
-      qrwcRef.current.on("disconnected", () => {
+      },
+      (Qrwc: Qrwc) => {
         setIsConnected(false);
-      });
-    }
-  }, []);
-
-  const connect = useCallback((ip: string) => {
-    try {
-      initializeQrwc();
-      ipRef.current = ip;
-      socketRef.current = new WebSocket(`ws://${ip}/qrc-public-api/v0`);
-
-      socketRef.current.onopen = () => {
-        if (socketRef.current) {
-          qrwcRef.current?.attachWebSocket(socketRef.current);
-        }
-      };
-
-      socketRef.current.onerror = (error) => {
-        console.error('WebSocket error:', error);
-        setIsConnected(false);
-      };
-    } catch (error) {
-      console.error('Connection error:', error);
-      setIsConnected(false);
-    }
-  }, [initializeQrwc]);
-
-  const disconnect = useCallback(() => {
-    if (socketRef.current) {
-      socketRef.current.close();
-      socketRef.current = null;
-    }
-    qrwcRef.current = null;
-    setIsConnected(false);
-    setComponents(null);
-  }, []);
-
-  const reconnect = useCallback(() => {
-    if (ipRef.current) {
-      disconnect();
-      connect(ipRef.current);
-    }
-  }, [connect, disconnect]);
+      })
+  },
+  [])
 
   return (
     <QsysContext.Provider value={{ 
       components, 
       isConnected, 
-      connect, 
-      disconnect,
-      reconnect 
     }}>
       {children}
     </QsysContext.Provider>
