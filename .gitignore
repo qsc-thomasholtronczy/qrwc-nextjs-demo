@@ -42,4 +42,5 @@ next-env.d.ts
 
 Dockerfile
 qsys-sidebar-ui.qsys
+qsys-sidebar-ui-RC10.qsys
 qsys-sidebar-ui.code-workspace
