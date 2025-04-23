@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@q-sys/qrwc':
-        specifier: ^0.3.0-alpha
+        specifier: 0.3.0-alpha
         version: 0.3.0-alpha
       framer-motion:
         specifier: ^11.18.0

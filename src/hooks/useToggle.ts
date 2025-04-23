@@ -14,7 +14,6 @@ export const useToggle = ({ componentName, controlName }: UseToggleProps) => {
 
   useEffect(() => {
     if (!components?.[componentName]) return
-
     setState(components[componentName].Controls[controlName].Value)
 
     const interval = setInterval(() => {

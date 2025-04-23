@@ -8,7 +8,7 @@ To Deploy this app:
 
 1. Locate "qrwc-demo.qsys" and configure and load the file to a core. The default core is a core nano.
 
-    - ***This demo is running on QDS: qrwc_beta.2408.291. It is using the QRWC npm module, version 0.3.0-alpha. Please contact an admin at Developers.QSC.com for access***
+    - ***This demo is using the QRWC npm module, version 0.3.0-alpha. Please contact an admin at Developers.QSC.com for access***
 
 2. Open the project in VSCode and create a file in the root directory named '.env.local'
     - Environment file should contain = NEXT_PUBLIC_QSYS_IP='{core-ip}'
@@ -26,9 +26,6 @@ pnpm i
 npm i @q-sys/qrwc
 # or
 pnpm add @q-sys/qrwc
-
-# Ensure Node.JS Version 18
-nvm use 18
 
 # Start development server
 npm run dev
