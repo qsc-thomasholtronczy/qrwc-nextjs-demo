@@ -1,20 +1,22 @@
 # Welcome to a QRWC demo featuring Next.JS
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) project created with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
 To Deploy this app:
 
-1. Locate "qrwc-demo.qsys" and configure and load the file to a core. The default core is a core nano.
+1. Fork this repository.
+
+2. Locate "qrwc-demo.qsys" and configure and load the file to a core. The default core is a core nano.
 
     - ***This demo is using the QRWC npm module, version 0.3.0-alpha. Please contact an admin at Developers.QSC.com for access***
 
-2. Open the project in VSCode and create a file in the root directory named '.env.local'
+3. Open the project in VSCode and create a file in the root directory named '.env.local'
     - Environment file should contain = NEXT_PUBLIC_QSYS_IP='{core-ip}'
     - Open this file and replace the default IP with the IP of your Q-SYS Core
 
-3. Run the development server:
+4. Run the development server:
 
 ```bash
 # Install required dependencies
