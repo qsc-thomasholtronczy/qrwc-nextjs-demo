@@ -2,6 +2,9 @@
 
 This is a [Next.js](https://nextjs.org) project created with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+> [!CAUTION]
+> This project was built with QRWC 0.3.0-alpha. It will not work with any newer version. 
+
 ## Getting Started
 
 To Deploy this app:
